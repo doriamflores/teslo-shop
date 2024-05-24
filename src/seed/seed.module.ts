@@ -8,4 +8,4 @@ import { ProductsModule } from 'src/products/products.module';
   providers: [SeedService],
   imports: [ProductsModule],
 })
-export class SeedModule {}
+export class SeedModule { }
