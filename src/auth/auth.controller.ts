@@ -1,27 +1,15 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  UseGuards,
-  Req,
-  SetMetadata,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
-import { GetUser } from './decorators/get-user.decorator';
-import { User } from './entities/user.entity';
-import { RawHeaders } from './decorators/raw-headers.decorator';
-import { UserRoleGuard } from './guards/user-role.guard';
-import { RoleProtected } from './decorators/role-protected.decorator';
+import { GetUser, Auth, RoleProtected, RawHeaders } from './decorators';
+import { CreateUserDto, LoginUserDto } from './dto';
 import { ValidRoles } from './interfaces';
-import { Auth } from './decorators/auth.decorator';
+import { User } from './entities/user.entity';
+import { UserRoleGuard } from './guards/user-role.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
   create(@Body() createUserDto: CreateUserDto) {

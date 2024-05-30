@@ -8,18 +8,18 @@ export class SeedService {
     private readonly productService: ProductsService
   ) { }
 
-  async runSeed() {
-    this.insertNewProducts();
+  async runSeed(user) {
+    this.insertNewProducts(user);
     return 'SEED EXECUTE';
   }
 
-  private async insertNewProducts() {
+  private async insertNewProducts(user) {
     await this.productService.deleteAllProducts();
     const products = initialData.products;
     const insertPromises = [];
 
     products.forEach(product => {
-      insertPromises.push(this.productService.create(product));
+      insertPromises.push(this.productService.create(product, user));
     });
 
     await Promise.all(insertPromises);

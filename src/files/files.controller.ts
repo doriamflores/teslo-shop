@@ -1,3 +1,5 @@
+import { diskStorage } from 'multer';
+import { Response } from 'express';
 import {
   BadRequestException,
   Controller,
@@ -8,20 +10,18 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { fileFilter } from './helpers/fileFilter.helper';
-import { diskStorage } from 'multer';
-import { fileNamer } from './helpers/fileNamer.helper';
-import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+
+import { FilesService } from './files.service';
+import { fileFilter, fileNamer } from './helpers';
 
 @Controller('files')
 export class FilesController {
   constructor(
     private readonly filesService: FilesService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   @Get('product/:imageName')
   findProductImage(
