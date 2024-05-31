@@ -19,7 +19,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     try {
@@ -35,7 +35,7 @@ export class AuthService {
 
       return {
         ...user,
-        token: this.getJwtToken({ id: user.id })
+        token: this.getJwtToken({ id: user.id }),
       };
     } catch (error) {
       this.handleErrors(error);
@@ -57,7 +57,14 @@ export class AuthService {
       throw new UnauthorizedException('Credentials is not valid (password)');
     return {
       ...user,
-      token: this.getJwtToken({ id: user.id })
+      token: this.getJwtToken({ id: user.id }),
+    };
+  }
+
+  async checkAuthStatus(user: User) {
+    return {
+      ...user,
+      token: this.getJwtToken({ id: user.id }),
     };
   }
 
@@ -70,8 +77,6 @@ export class AuthService {
     if (error.code === '23505') {
       throw new BadRequestException(error.detail);
     }
-    console.log(error);
-
     throw new InternalServerErrorException('Please check server logs');
   }
 }
